@@ -12,10 +12,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +29,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -111,8 +115,15 @@ public class ArticleListActivity extends AppCompatActivity implements
         Adapter adapter = new Adapter(cursor);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
+        int columnCount = getResources ().getInteger (R.integer.list_column_count);
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager (getApplicationContext ());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        if (getResources ().getConfiguration ().orientation == ORIENTATION_LANDSCAPE) {
+            mRecyclerView.setLayoutManager (sglm);
+        } else {
+            mRecyclerView.setLayoutManager(linearLayoutManager);
+        }
     }
 
     @Override
@@ -141,7 +152,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ArticleListActivity.this, ArticleDetailActivity.class);
-                    intent.putExtra (Intent.ACTION_VIEW, vh.getAdapterPosition ());
+                    intent.putExtra("selected_index", vh.getAdapterPosition());
                     startActivity(intent);
                 }
             });
