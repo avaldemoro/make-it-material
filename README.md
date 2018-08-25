@@ -11,5 +11,3 @@ The starter code for this project can be found [here](file:///Users/astervaldemo
 <img src="/Screenshot_1535162550.png" width="250px" height="450px" />&nbsp;&nbsp;
 <img src="/Screenshot_1535162558.png" width="250px" height="450px" />&nbsp;&nbsp;
 <img src="Screenshot_1535162569.png" width="250px" height="450px" />&nbsp;&nbsp;
-
-This repository stores the starter code for the XYZ Reader project in Udacity's Android Nanodegree.
